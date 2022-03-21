@@ -6,7 +6,7 @@ A clean template to kick-start your deep learning research 🚀⚡🔥<br>
 
 _Suggestions are always welcome!_
 
-![](/media/devel.png)
+![](https://resources.machinelearning.one/devel.png)
 
 </div>
 
