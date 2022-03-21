@@ -1,0 +1,23 @@
+services:
+  devel:
+    image: machinelearning-one/devel:latest
+    container_name: ${PROJECT_NAME}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USERNAME=${USERNAME}
+        - AUTHOR=${AUTHOR}
+        - EMAIL=${EMAIL}
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1 
+              capabilities: [gpu]
+    volumes:
+      - ${SHARED_DIR}:/home/${USERNAME}
+    network_mode: host
