@@ -8,9 +8,9 @@ RUN APT_INSTALL="apt install -y --no-install-recommends" && \
     apt update && \
     # Install the locales
     DEBIAN_FRONTEND=noninteractive $APT_INSTALL locales-all
-ENV LANG "en_US.UTF-8"
-ENV LANGUAGE "en_US.UTF-8"
-ENV LC_ALL "en_US.UTF-8"
+ENV LANG "en_US.UTF-8" \
+    LANGUAGE "en_US.UTF-8" \
+    LC_ALL "en_US.UTF-8"
 # Install the basic utilities and python
 RUN APT_INSTALL="apt install -y --no-install-recommends" && \
     apt update && \
@@ -40,8 +40,8 @@ RUN APT_INSTALL="apt install -y --no-install-recommends" && \
     wget -O ~/get-pip.py \
     https://bootstrap.pypa.io/get-pip.py && \
     python3.8 ~/get-pip.py && \
-    ln -s /usr/bin/python3.8 /usr/local/bin/python && \
-    echo "export PATH=$PATH:~/.local/bin" >> ~/.bashrc
+    ln -s /usr/bin/python3.8 /usr/local/bin/python
+ENV PATH=$PATH:~/.local/bin
 # Install core python packages
 RUN PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL \
