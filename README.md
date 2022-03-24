@@ -10,6 +10,31 @@ _Suggestions are always welcome!_
 
 </div>
 
+## What's included in the image?
+
+- Python 3.8
+    - [`numpy`](https://numpy.org)
+    - [`scipy`](https://www.scipy.org)
+    - [`pandas`](https://pandas.pydata.org)
+    - [`scikit-learn`](https://scikit-learn.org)
+        - [`scikit-image`](https://scikit-image.org)
+    - [`matplotlib`](https://matplotlib.org)
+    - [`seaborn`](https://seaborn.pydata.org)
+    - [`torch`](https://pytorch.org)
+        - [`torchvision`](https://pytorch.org/vision)
+        - [`torchaudio`](https://pytorch.org/audio)
+        - [`pytorch-lightning`](https://www.pytorchlightning.ai)
+    - [`einops`](https://einops.rocks)
+    - [`hydra-core`](https://hydra.cc)
+- [`Jupyterlab`](https://jupyter.org)
+- [`OpenCV`](https://opencv.org)
+
+## What's included in this repo?
+
+- An _example .env_ file to parametrize the build process
+- A modular and easily customizable _Dockerfile_ that defines the installation of above mentioned packages
+- A _docker-compose.yml_ file to handle lifecycle events such as building the image, spinning up the container and tearing it down.
+
 ## Prerequisites
 
 Download and install:
@@ -21,32 +46,39 @@ Download and install:
 
 ## Getting Started
 
-Clone the repository:
+1. Clone the repository:
 
 ```sh
 git clone https://github.com/machinelearning-one/devel.git
 cd devel
 ```
 
-Set up environment variables and rename the example file:
+2. Set up environment variables and rename the example file:
 
 ```sh
 mv .env.example .env
 ```
 
-Build and save the image:
-
+3. Enable Buildkit for faster and cacheable builds:
 ```sh
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
-docker compose build --build-arg PASSWORD={PASSWORD}
 ```
 
-Create a shared directory and instantiate the container:
+4. Set the password and start the build:
 
 ```sh
-export SHARED_DIR={SHARED_DIR}
+docker compose build --build-arg PASSWORD=<PASSWORD>
+```
+
+5. Create a shared directory to be mapped into the container:
+
+```sh
+export SHARED_DIR=<SHARED_DIR>
 mkdir -p $SHARED_DIR
+```
+6. Instantiate the container:
+```sh
 docker compose up -d
 ```
 Use VS Code's remote containers extension to connect to the container to have a holistic development experience.

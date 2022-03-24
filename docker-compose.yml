@@ -1,23 +1,44 @@
 services:
+  # Creates a single service for development
+  # -----------------------------------------
   devel:
+    # Build the required image if it doesn't exist and tag it as 'latest'
+    # --------------------------------------------------------------------
     image: machinelearning-one/devel:latest
-    container_name: ${PROJECT_NAME}
     build:
+      # Use the Dockerfile in the current directory
+      # --------------------------------------------
       context: .
       dockerfile: Dockerfile
+      # Provide build time variables via .env file
+      # -------------------------------------------
       args:
         - USERNAME=${USERNAME}
         - AUTHOR=${AUTHOR}
         - EMAIL=${EMAIL}
+    # Name the resultant container based on project name set in .env file
+    # --------------------------------------------------------------------
+    container_name: ${PROJECT_NAME}
+    # Set the interactive and terminal mode to true
+    # ----------------------------------------------
     stdin_open: true
     tty: true
+    # Assign NVIDIA GPU(s) to the container
+    # --------------------------------------
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              count: 1 
-              capabilities: [gpu]
+              # Defaults to 1 GPU, use a suitable count based on availability
+              # If specific GPUs are required, replace count with device_ids: [x,...,y]
+              # ------------------------------------------------------------------------
+              count: 1
+              capabilities: [ gpu ]
+    # Mount the shared volume to home directory of the container
+    # -----------------------------------------------------------
     volumes:
       - ${SHARED_DIR}:/home/${USERNAME}
+    # Set container to use the host's network
+    # ----------------------------------------
     network_mode: host
