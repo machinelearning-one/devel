@@ -96,7 +96,7 @@ RUN APT_INSTALL="apt install -y --no-install-recommends" && \
     DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
     libopencv-dev python3-opencv
 
-# Peform cleanup
+# Perform cleanup
 # ---------------
 RUN ldconfig && \
     apt clean && \
