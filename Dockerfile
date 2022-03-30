@@ -13,20 +13,24 @@ ARG EMAIL
 ARG USERNAME
 ARG PASSWORD
 
+# Define commands for headless installation
+# ------------------------------------------
+ENV DEBIAN_FRONTEND=noninteractive
+ENV APT_INSTALL="apt install -y --no-install-recommends"
+ENV PIP_INSTALL="python -m pip --no-cache-dir install --upgrade"
+
 # Setup the locale
 # -----------------
-RUN APT_INSTALL="apt install -y --no-install-recommends" && \
-    apt update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL locales-all
+RUN apt update && \
+    $APT_INSTALL locales-all
 ENV LANG "en_US.UTF-8" \
     LANGUAGE "en_US.UTF-8" \
     LC_ALL "en_US.UTF-8"
 
 # Install basic utilities
 # ------------------------
-RUN APT_INSTALL="apt install -y --no-install-recommends" && \
-    apt update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
+RUN apt update && \
+    $APT_INSTALL \
     sudo \
     build-essential \
     cmake \
@@ -44,9 +48,8 @@ RUN APT_INSTALL="apt install -y --no-install-recommends" && \
 
 # Install python 3.8 and pip
 # ---------------------------
-RUN APT_INSTALL="apt install -y --no-install-recommends" && \
-    apt update && \
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
+RUN apt update && \
+    $APT_INSTALL \
     python3.8 \
     python3.8-dev \
     python3.8-distutils \
@@ -59,8 +62,7 @@ ENV PATH=$PATH:~/.local/bin
 
 # Install numfocus and allied packages
 # -------------------------------------
-RUN PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL \
+RUN $PIP_INSTALL \
     numpy \
     scipy \
     pandas \
@@ -74,8 +76,7 @@ RUN PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
 
 # Install pytorch and allied packages
 # ------------------------------------
-RUN PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL \
+RUN $PIP_INSTALL \
     torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113 && \
     $PIP_INSTALL \
     einops \
@@ -84,16 +85,13 @@ RUN PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
 
 # Install jupyterlab
 # -------------------
-RUN PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL \
+RUN $PIP_INSTALL \
     jupyterlab
 
 # Install opencv
 # ---------------
-RUN APT_INSTALL="apt install -y --no-install-recommends" && \
-    apt update && \
-    # Install the base packages
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
+RUN apt update && \
+    $APT_INSTALL \
     libopencv-dev python3-opencv
 
 # Perform cleanup

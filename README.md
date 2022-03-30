@@ -58,25 +58,25 @@ cd devel
 ```sh
 mv .env.example .env
 ```
-
-3. Enable Buildkit for faster and cacheable builds:
-```sh
-export DOCKER_BUILDKIT=1
-export COMPOSE_DOCKER_CLI_BUILD=1
-```
-
-4. Set the password and start the build:
-
-```sh
-docker compose build --build-arg PASSWORD=<PASSWORD>
-```
-
-5. Create a shared directory to be mapped into the container:
+3. Create a shared directory to be mapped into the container:
 
 ```sh
 export SHARED_DIR=<SHARED_DIR>
 mkdir -p $SHARED_DIR
 ```
+
+4. Enable Buildkit for faster and cacheable builds:
+```sh
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+```
+
+5. Set the password and start the build:
+
+```sh
+docker compose build --build-arg PASSWORD=<PASSWORD>
+```
+
 6. Instantiate the container:
 ```sh
 docker compose up -d

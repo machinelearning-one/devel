@@ -2,9 +2,9 @@ services:
   # Creates a single service for development
   # -----------------------------------------
   devel:
-    # Build the required image if it doesn't exist and tag it as 'latest'
+    # Build the required image if it doesn't exist and tag it as 'prime'
     # --------------------------------------------------------------------
-    image: machinelearning-one/devel:latest
+    image: machinelearning-one/devel:prime
     build:
       # Use the Dockerfile in the current directory
       # --------------------------------------------
