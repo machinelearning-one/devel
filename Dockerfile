@@ -15,17 +15,20 @@ ARG PASSWORD
 
 # Define commands for headless installation
 # ------------------------------------------
-ENV DEBIAN_FRONTEND=noninteractive
-ENV APT_INSTALL="apt install -y --no-install-recommends"
-ENV PIP_INSTALL="python -m pip --no-cache-dir install --upgrade"
+ENV DEBIAN_FRONTEND=noninteractive \
+    APT_INSTALL="apt install -y --no-install-recommends" \
+    PIP_INSTALL="python -m pip --no-cache-dir install --upgrade"
 
 # Setup the locale
 # -----------------
 RUN apt update && \
-    $APT_INSTALL locales-all
-ENV LANG "en_US.UTF-8" \
-    LANGUAGE "en_US.UTF-8" \
-    LC_ALL "en_US.UTF-8"
+    $APT_INSTALL locales && \
+    locale-gen en_US.UTF-8 && \
+    echo LANG=en_US.UTF-8 > /etc/default/locale
+
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
 
 # Install basic utilities
 # ------------------------
@@ -48,6 +51,8 @@ RUN apt update && \
 
 # Install python 3.8 and pip
 # ---------------------------
+ENV PATH=$PATH:~/.local/bin
+
 RUN apt update && \
     $APT_INSTALL \
     python3.8 \
@@ -58,7 +63,6 @@ RUN apt update && \
     https://bootstrap.pypa.io/get-pip.py && \
     python3.8 ~/get-pip.py && \
     ln -s /usr/bin/python3.8 /usr/local/bin/python
-ENV PATH=$PATH:~/.local/bin
 
 # Install numfocus and allied packages
 # -------------------------------------
@@ -101,17 +105,15 @@ RUN ldconfig && \
     apt autoremove && \
     rm -rf -- /var/lib/apt/lists/* /tmp/* ~/*
 
-# Create the user and set the password
-# -------------------------------------
-RUN useradd -m -s /bin/bash -p $(openssl passwd -1 $PASSWORD) $USERNAME
-
-# Add the user to the sudo group
-# -------------------------------
-RUN usermod -aG sudo $USERNAME
-
-# Configure git
-# --------------
-RUN git config --global user.name "$AUTHOR" && \
+# Create and configure the user
+# ------------------------------
+RUN useradd -m -s /bin/bash -p $(openssl passwd -1 $PASSWORD) $USERNAME && \
+    # Add the user to the sudo group
+    # -------------------------------
+    usermod -aG sudo $USERNAME && \
+    # Configure git
+    # --------------
+    git config --global user.name "$AUTHOR" && \
     git config --global user.email "$EMAIL"
 
 # Set the default user and working directory
