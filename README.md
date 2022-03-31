@@ -50,38 +50,47 @@ Download and install:
 
 ```sh
 git clone https://github.com/machinelearning-one/devel.git
-cd devel
 ```
 
-2. Set up environment variables and rename the example file:
+2. Open directory in VS Code and accept installing recommended extensions if prompted:
+   
+```sh
+cd devel
+code .
+```
+
+3. Set up environment variables and rename the example file:
 
 ```sh
 mv .env.example .env
 ```
-3. Create a shared directory to be mapped into the container:
+4. Create a shared directory to be mapped into the container:
 
 ```sh
 export SHARED_DIR=<SHARED_DIR>
 mkdir -p $SHARED_DIR
 ```
 
-4. Enable Buildkit for faster and cacheable builds:
+5. Enable Buildkit for faster and cacheable builds:
 ```sh
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 ```
 
-5. Set the password and start the build:
+6. Set the password and start the build:
 
 ```sh
 docker compose build --build-arg PASSWORD=<PASSWORD>
 ```
 
-6. Instantiate the container:
+7. Instantiate the container:
 ```sh
 docker compose up -d
 ```
-Use VS Code's remote containers extension to connect to the container to have a holistic development experience.
+
+8. Start developing!
+
+> _Navigate to Remote Explorer tab on the sidebar and click on attach to the container to have a holistic development experience._
 
 
 ## Cleanup
