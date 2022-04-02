@@ -46,6 +46,7 @@ RUN apt update && \
     git \
     vim \
     libssl-dev \
+    openssh-client \
     unzip \
     unrar
 
@@ -73,10 +74,7 @@ RUN $PIP_INSTALL \
     scikit-image \
     scikit-learn \
     matplotlib \
-    seaborn \
-    Cython \
-    tqdm \
-    typing
+    seaborn 
 
 # Install pytorch and allied packages
 # ------------------------------------
@@ -85,7 +83,27 @@ RUN $PIP_INSTALL \
     $PIP_INSTALL \
     einops \
     pytorch-lightning \
-    hydra-core
+    torchmetrics \
+    hydra-core \
+    hydra-colorlog \
+    hydra-optuna-sweeper
+
+# Install quality of life packages
+# ---------------------------------
+RUN $PIP_INSTALL \
+    Cython \
+    typing \
+    pre-commit \
+    black[jupyter] \
+    flake8 \
+    isort \
+    nbstripout \
+    python-dotenv \
+    tqdm \
+    rich \
+    pytest \
+    sh \
+    pudb
 
 # Install jupyterlab
 # -------------------

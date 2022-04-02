@@ -34,6 +34,7 @@ _Suggestions are always welcome!_
 - An _example .env_ file to parametrize the build process
 - A modular and easily customizable _Dockerfile_ that defines the installation of above mentioned packages
 - A _docker-compose.yml_ file to handle lifecycle events such as building the image, spinning up the container and tearing it down.
+- A .vscode/extensions.json file to recommend the necessary extensions to effectively use generated containers through vs code.
 
 ## Prerequisites
 
@@ -92,6 +93,20 @@ docker compose up -d
 
 > _Navigate to Remote Explorer tab on the sidebar and click on attach to the container to have a holistic development experience._
 
+## Notes
+
+**SSH Key Generation**: 
+
+To push code to remote repositories, it is recommended to use ssh over https. To generate a key pair, run the following command:
+
+```sh
+ssh-keygen -t ed25519 -C "<comment>"
+```
+It is recommended you set up a passphrase different from user password.
+
+If you accept the default prompt for the location, public key can be found at `~/.ssh/id_ed25519.pub`, otherwise it would be at the location you specified.
+
+Copy the public key and follow the instructions of your VCS provider (GitHub/GitLab etc.) to assign it as trusted.
 
 ## Cleanup
 
