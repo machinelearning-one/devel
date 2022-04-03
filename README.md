@@ -108,6 +108,20 @@ If you accept the default prompt for the location, public key can be found at `~
 
 Copy the public key and follow the instructions of your VCS provider (GitHub/GitLab etc.) to assign it as trusted.
 
+**Recursive Containerization**
+
+You might need to use containers from your development environment for reasons such as (1) Developing containers, (2) Avoiding installation of heavy dependencies etc. 
+
+The recommended approach to do so is Docker out of Docker specified [here](https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/)
+
+To use recursive containerization, switch to the `variant/recursive` branch by running the following command and follow the same steps as above to build and start the container:
+
+```sh
+git checkout variant/recursive
+```
+
+The `variant/recursive` branch provides logic for mounting the docker socket and the python sdk. A full cli inside the container is out of scope of this template and isn't recommended.
+
 ## Cleanup
 
 To remove the container, run the following command from the same folder:
