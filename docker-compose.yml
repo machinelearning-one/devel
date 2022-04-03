@@ -2,9 +2,9 @@ services:
   # Creates a single service for development
   # -----------------------------------------
   devel:
-    # Build the required image if it doesn't exist and tag it as 'prime'
-    # --------------------------------------------------------------------
-    image: machinelearning-one/devel:prime
+    # Build the required image if it doesn't exist and tag it as 'recursive'
+    # -----------------------------------------------------------------------
+    image: machinelearning-one/devel:recursive
     build:
       # Use the Dockerfile in the current directory
       # --------------------------------------------
@@ -39,6 +39,9 @@ services:
     # -----------------------------------------------------------
     volumes:
       - ${SHARED_DIR}:/home/${USERNAME}
+      # Mount the docker socket to the container
+      # -------------------------------------------
+      - /var/run/docker.sock:/var/run/docker.sock
     # Set container to use the host's network
     # ----------------------------------------
     network_mode: host

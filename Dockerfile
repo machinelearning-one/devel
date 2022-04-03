@@ -116,6 +116,11 @@ RUN apt update && \
     $APT_INSTALL \
     libopencv-dev python3-opencv
 
+# Install docker sdk for python
+# ------------------------------
+RUN $PIP_INSTALL \
+    docker
+
 # Perform cleanup
 # ---------------
 RUN ldconfig && \
