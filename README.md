@@ -114,10 +114,18 @@ You might need to use containers from your development environment for reasons s
 
 The recommended approach to do so is Docker out of Docker specified [here](https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/)
 
-To use recursive containerization, switch to the `variant/recursive` branch by running the following command and follow the same steps as above to build and start the container:
+To use recursive containerization, run the following commands first and then follow the same steps as above to build and start the container:
+
+1. To switch to appropriate branch:
 
 ```sh
 git checkout variant/recursive
+```
+
+2. To avoid using sudo to access docker daemon from the container
+   
+```sh
+export DOCKER_GROUP=`stat -c '%g' /var/run/docker.sock`
 ```
 
 The `variant/recursive` branch provides logic for mounting the docker socket and the python sdk. A full cli inside the container is out of scope of this template and isn't recommended.
