@@ -108,7 +108,8 @@ RUN $PIP_INSTALL \
 # Install jupyterlab
 # -------------------
 RUN $PIP_INSTALL \
-    jupyterlab
+    jupyterlab \
+    ipywidgets
 
 # Install opencv
 # ---------------
