@@ -103,7 +103,8 @@ RUN $PIP_INSTALL \
     rich \
     pytest \
     sh \
-    pudb
+    pudb \
+    twine
 
 # Install jupyterlab
 # -------------------
