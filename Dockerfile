@@ -118,6 +118,11 @@ RUN apt update && \
     $APT_INSTALL \
     libopencv-dev python3-opencv
 
+# Add autoenv
+# ------------
+RUN echo "autoenv() { if [ -x .autoenv ]; then source .autoenv ; echo '.autoenv executed' ; fi } ;" >> /etc/bash.bashrc && \
+    echo "cd() { builtin cd \"\$@\" ; autoenv ; } ; autoenv" >> /etc/bash.bashrc
+
 # Perform cleanup
 # ---------------
 RUN ldconfig && \
